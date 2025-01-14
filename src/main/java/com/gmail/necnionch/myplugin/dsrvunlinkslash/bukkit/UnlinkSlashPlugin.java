@@ -4,11 +4,13 @@ import com.gmail.necnionch.myplugin.dsrvunlinkslash.bukkit.command.SlashCommand;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.JDA;
 import github.scarsz.discordsrv.dependencies.jda.api.interactions.commands.Command;
+import github.scarsz.discordsrv.dependencies.jda.api.requests.RestAction;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public final class UnlinkSlashPlugin extends JavaPlugin {
@@ -56,8 +58,12 @@ public final class UnlinkSlashPlugin extends JavaPlugin {
     }
 
 
+    public DiscordSRV getSRV() {
+        return srv;
+    }
+
     private void addCommands(JDA jda) {
-        UnlinkSlashCommand command = new UnlinkSlashCommand(srv.getAccountLinkManager());
+        UnlinkSlashCommand command = new UnlinkSlashCommand(this);
         commands.add(command);
 
         // register commands
@@ -74,9 +80,13 @@ public final class UnlinkSlashPlugin extends JavaPlugin {
         if (jda != null) {
             try {
                 commands.forEach(jda::removeEventListener);
-                registeredCommands.forEach(slash -> {
-                    slash.delete().queue(v -> getLogger().info("Deleted " + slash.getName() + " command"));
-                });
+
+                getLogger().info("Deleting " + registeredCommands.size() + " commands");
+                CompletableFuture.allOf(registeredCommands.stream()
+                                .map(Command::delete)
+                                .map(RestAction::submit)
+                        .toArray(CompletableFuture[]::new)).get();
+
             } catch (Throwable e) {
                 e.printStackTrace();
             }
