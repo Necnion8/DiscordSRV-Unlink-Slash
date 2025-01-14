@@ -2,6 +2,8 @@ name: DiscordSRV-Unlink-Slash
 version: '${version}'
 main: com.gmail.necnionch.myplugin.dsrvunlinkslash.bukkit.UnlinkSlashPlugin
 api-version: '1.13'
+author: Necnion8
+website: https://github.com/Necnion8/DiscordSRV-Unlink-Slash
 
 depend:
   - DiscordSRV

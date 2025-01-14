@@ -20,7 +20,7 @@ repositories {
         url = "https://nexus.scarsz.me/content/groups/public/"
     }
 
-    maven { // JDA
+    maven {  // JDA
         url = "https://m2.dv8tion.net/releases"
     }
 }
