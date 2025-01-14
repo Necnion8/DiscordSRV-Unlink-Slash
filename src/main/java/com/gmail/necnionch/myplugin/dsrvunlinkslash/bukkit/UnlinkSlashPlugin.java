@@ -1,6 +1,7 @@
 package com.gmail.necnionch.myplugin.dsrvunlinkslash.bukkit;
 
 import com.gmail.necnionch.myplugin.dsrvunlinkslash.bukkit.command.SlashCommand;
+import com.gmail.necnionch.myplugin.dsrvunlinkslash.bukkit.command.UnlinkSlashCommand;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.JDA;
 import github.scarsz.discordsrv.dependencies.jda.api.interactions.commands.Command;
